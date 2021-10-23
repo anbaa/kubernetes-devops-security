@@ -25,7 +25,6 @@ pipeline {
       }
     }
 
-  stages {
     stage('Build') {
       steps {
         sh 'docker build -t anbazhagandkr/numeric-app:""$GIT_COMMIT"" .'
@@ -47,5 +46,5 @@ pipeline {
       sh 'docker logout'
     }
   }
-  }
+  
 }
