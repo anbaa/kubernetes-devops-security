@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  environment {
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+  }
 
   stages {
 
@@ -22,14 +25,27 @@ pipeline {
       }
     }
 
-    stage('Docker Build and Push') {
+  stages {
+    stage('Build') {
       steps {
-        withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-          sh 'printenv'
-          sh 'docker build -t anbazhagandkr/numeric-app:""$GIT_COMMIT"" .'
-          sh 'docker push anbazhagandkr/numeric-app:""$GIT_COMMIT""'
-        }
+        sh 'docker build -t anbazhagandkr/numeric-app:""$GIT_COMMIT"" .'
       }
     }
+    stage('Login') {
+      steps {
+        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+      }
+    }
+    stage('Push') {
+      steps {
+        sh 'docker push anbazhagandkr/numeric-app:""$GIT_COMMIT""'
+      }
+    }
+  }
+  post {
+    always {
+      sh 'docker logout'
+    }
+  }
   }
 }
