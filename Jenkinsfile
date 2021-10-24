@@ -40,7 +40,7 @@ pipeline {
         sh 'docker push anbazhagandkr/numeric-app:""$GIT_COMMIT""'
       }
     }
-  }
+  
   post {
     always {
       sh 'docker logout'
@@ -54,5 +54,5 @@ pipeline {
         }
       }
     }
-  
+  }
 }
