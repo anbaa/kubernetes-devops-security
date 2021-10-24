@@ -25,11 +25,11 @@ pipeline {
       }
     }
 
-    stage('SonarQube - SAST') {
-      steps {
-        sh "mvn sonar:sonar -Dsonar.projectKey=numeric-application -Dsonar.host.url=http://ec2-52-62-110-80.ap-southeast-2.compute.amazonaws.com:9000  -Dsonar.login=972d6a5d17dd715b312d5686c7a9626b77d4a4db"
-      }
-    }
+    //stage('SonarQube - SAST') {
+      //steps {
+        //sh "mvn sonar:sonar -Dsonar.projectKey=numeric-application -Dsonar.host.url=http://ec2-52-62-110-80.ap-southeast-2.compute.amazonaws.com:9000  -Dsonar.login=972d6a5d17dd715b312d5686c7a9626b77d4a4db"
+    //  }
+    //}
 
     stage('Build') {
       steps {
