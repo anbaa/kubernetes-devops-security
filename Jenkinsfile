@@ -24,14 +24,10 @@ pipeline {
         }
       }
     }
-    stage('Mutation Tests - PIT') {
+
+    stage('SonarQube - SAST') {
       steps {
-        sh "mvn org.pitest:pitest-maven:mutationCoverage"
-      }
-      post {
-        always {
-          pitmutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
-        }
+        sh "mvn sonar:sonar -Dsonar.projectKey=numeric-application -Dsonar.host.url=http://ec2-52-62-110-80.ap-southeast-2.compute.amazonaws.com:9000  -Dsonar.login=6ea72f24b92874e849e861d032dae9060a48b9b8"
       }
     }
 
