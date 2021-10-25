@@ -39,7 +39,15 @@ pipeline {
         }
       }
     }
-
+    stage('Vulnerability Scan - Docker') {
+      steps {
+        parallel(
+          "OPA Conftest": {
+            sh 'docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-docker-security.rego Dockerfile'
+          }
+        )
+      }
+    }
     stage('Build') {
       steps {
         sh 'docker build -t anbazhagandkr/numeric-app:""$GIT_COMMIT"" .'
